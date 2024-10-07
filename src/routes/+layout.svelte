@@ -3,4 +3,4 @@
 	import '../font.css';
 </script>
 
-<slot></slot>
+<slot />
