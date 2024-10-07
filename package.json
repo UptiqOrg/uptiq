@@ -41,6 +41,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@auth/sveltekit": "^1.6.0",
 		"@libsql/client": "^0.14.0",
 		"bits-ui": "^0.21.16",
 		"clsx": "^2.1.1",
