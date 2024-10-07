@@ -1,7 +1,6 @@
 <script lang="ts">
-	import { Button } from '$lib/components/ui/button';
-	import { Github } from 'lucide-svelte';
 	import Logo from '$lib/components/ui/logo/logo.svelte';
+	import Auth from '$lib/components/ui/auth/auth.svelte';
 </script>
 
 <main class="h-screen w-screen bg-gradient-to-t from-amber-50 to-blue-100 p-2">
@@ -9,7 +8,7 @@
 		<div class="container mx-auto flex items-center justify-between">
 			<a href="/"><Logo /></a>
 			<div>
-				<Button href="/login" variant="outline">Login <Github class="ml-2 h-5 w-5" /></Button>
+				<Auth />
 			</div>
 		</div>
 	</nav>
