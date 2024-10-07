@@ -1,12 +1,13 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import { Github } from 'lucide-svelte';
+	import Logo from '$lib/components/ui/logo/logo.svelte';
 </script>
 
 <main class="h-screen w-screen bg-gradient-to-t from-amber-50 to-blue-100 p-2">
 	<nav class="flex h-20 w-screen place-items-center text-lg font-medium">
 		<div class="container mx-auto flex items-center justify-between">
-			<a href="/">upTiq</a>
+			<a href="/"><Logo /></a>
 			<div>
 				<Button href="/login" variant="outline">Login <Github class="ml-2 h-5 w-5" /></Button>
 			</div>
