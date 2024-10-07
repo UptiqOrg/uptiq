@@ -1,7 +1,7 @@
 <script lang="ts">
-	import TrendingUp from 'lucide-svelte/icons/trending-up';
+	import { Tally4 } from 'lucide-svelte';
 </script>
 
 <span class="flex items-center text-lg font-medium">
-	<TrendingUp strokeWidth="3" class="mr-2 h-6 w-6 text-indigo-600" /> upTiq
+	<Tally4 strokeWidth="3" class="mr-2 h-6 w-6 text-indigo-600" /> upTiq
 </span>
