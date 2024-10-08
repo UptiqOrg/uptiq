@@ -5,8 +5,10 @@ import { sql } from 'drizzle-orm';
 export const users = sqliteTable('users', {
 	id: integer('id').primaryKey({ autoIncrement: true }),
 	githubUserId: text('github_user_id').notNull().unique(),
-	username: text('username').notNull(),
-	email: text('email').notNull(),
+	username: text('username').notNull()
+		.unique(),
+	email: text('email').notNull()
+		.unique(),
 	createdAt: integer('created_at', { mode: 'timestamp' })
 		.notNull()
 		.default(sql`CURRENT_TIMESTAMP`),
