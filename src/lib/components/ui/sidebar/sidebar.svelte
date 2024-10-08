@@ -2,21 +2,7 @@
 	import { page } from '$app/stores';
 	import { onNavigate } from '$app/navigation';
 	import { cn } from '$lib/utils';
-	import LayoutDashboard from 'lucide-svelte/icons/layout-dashboard';
-	import WalletCards from 'lucide-svelte/icons/wallet-cards';
-
-	export const navLinks = [
-		{
-			title: 'Dashboard',
-			href: 'dashboard',
-			icon: LayoutDashboard
-		},
-		{
-			title: 'Projects',
-			href: 'projects',
-			icon: WalletCards
-		}
-	];
+	import { navLinks } from './constants';
 
 	$: isActive = (href: string): boolean => {
 		return $page.url.pathname.split('/')[1] === `${href}`;
@@ -24,8 +10,6 @@
 
 	onNavigate((navigation) => {
 		if (!document.startViewTransition) return;
-
-		console.log('startViewTransition');
 
 		return new Promise((resolve) => {
 			document.startViewTransition(async () => {
