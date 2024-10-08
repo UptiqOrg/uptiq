@@ -12,5 +12,7 @@
 </script>
 
 <svelte:window bind:innerWidth />
-
+<svelte:head>
+	<title>upTiq</title>
+</svelte:head>
 <slot />
