@@ -6,7 +6,7 @@
 	let innerWidth = 0;
 
 	$: metaStore.set({
-		isSmallScreen: innerWidth < 1000,
+		isSmallScreen: innerWidth < 768,
 		showDashboardSidebar: false
 	});
 </script>
