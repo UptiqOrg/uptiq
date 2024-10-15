@@ -35,10 +35,7 @@ export const { handle, signIn, signOut } = SvelteKitAuth(async (event) => {
 				if (session.user && token) {
 					event
 						.fetch('/api/user/ensure-user')
-						.then(async (res) => {
-							await res.json();
-							console.log(res);
-						})
+
 						.catch((err) => console.log(err));
 
 					session.user.id = token.id;
