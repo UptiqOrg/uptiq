@@ -4,11 +4,10 @@ import { sql } from 'drizzle-orm';
 // Users table
 export const users = sqliteTable('users', {
 	id: integer('id').primaryKey({ autoIncrement: true }),
+	name: text('name'),
 	githubUserId: text('github_user_id').notNull().unique(),
-	username: text('username').notNull()
-		.unique(),
-	email: text('email').notNull()
-		.unique(),
+	username: text('username').notNull().unique(),
+	email: text('email').notNull().unique(),
 	createdAt: integer('created_at', { mode: 'timestamp' })
 		.notNull()
 		.default(sql`CURRENT_TIMESTAMP`),
@@ -119,3 +118,5 @@ export const alertsRelations = relations(alerts, ({ one }) => ({
 		references: [websites.id]
 	})
 }));
+
+export type InsertUser = typeof users.$inferInsert;
