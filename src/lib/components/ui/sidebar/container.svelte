@@ -15,11 +15,7 @@
 	<nav>
 		<Sheet.Root bind:open={$metaStore.showDashboardSidebar}>
 			<Sheet.Trigger asChild let:builder>
-				<Button
-					builders={[builder]}
-					size="icon"
-					class="fixed left-0 top-[3.75rem] rounded-l-none border-l-0"
-				>
+				<Button variant="ghost" builders={[builder]} size="icon" class="fixed left-5 top-5">
 					<AlignLeft class="h-4 w-4" />
 				</Button>
 			</Sheet.Trigger>

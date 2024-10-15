@@ -5,7 +5,7 @@
 	import { navLinks } from './constants';
 
 	$: isActive = (href: string): boolean => {
-		return $page.url.pathname.split('/')[1] === `${href}`;
+		return $page.url.pathname === href;
 	};
 
 	onNavigate((navigation) => {
@@ -24,14 +24,14 @@
 	class="flex h-[calc(100vh-5rem)] w-full flex-col justify-between overflow-y-auto border-r py-12"
 >
 	<div>
-		{#each navLinks as link}
+		{#each navLinks as { href, title, icon }}
 			<a
-				aria-current={isActive(link.href) ? 'page' : undefined}
-				href="/{link.href}"
+				aria-current={isActive(href) ? 'page' : undefined}
+				{href}
 				class={cn('mx-6 flex items-center bg-transparent px-5 py-3')}
 			>
-				<svelte:component this={link.icon} class="mr-3 h-5 w-5" />
-				<span>{link.title}</span>
+				<svelte:component this={icon} class="mr-3 h-5 w-5" />
+				<span>{title}</span>
 			</a>
 		{/each}
 	</div>
