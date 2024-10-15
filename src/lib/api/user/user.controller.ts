@@ -9,8 +9,6 @@ export const ensureUserController = async (context: Context) => {
 	const { token } = await getAuthUser(context);
 	if (!token) return context.status(401);
 
-	console.log(token);
-
 	const user = {
 		githubUserId: token.id,
 		username: token.login,
@@ -20,7 +18,7 @@ export const ensureUserController = async (context: Context) => {
 
 	await ensureUser(user);
 
-	return context.json({ message: 'Hello, world!', user, token });
+	return context.json({ message: 'Ensured user!', user });
 };
 
 userRouter.use(verifyAuth());
