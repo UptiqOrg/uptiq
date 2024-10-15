@@ -11,7 +11,7 @@ import { userRouter } from './user/user.controller';
 
 export const api = new Hono().basePath('/api');
 
-api.use('*', initAuthConfig(getAuthConfig));
+api.use(initAuthConfig(getAuthConfig));
 api.route('/user', userRouter);
 
 function getAuthConfig(): AuthConfig {
