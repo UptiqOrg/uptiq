@@ -6,7 +6,7 @@ import {
 } from '$env/static/private';
 import GitHub from '@auth/sveltekit/providers/github';
 
-export const { handle, signIn, signOut } = SvelteKitAuth(async () => {
+export const { handle, signIn, signOut } = SvelteKitAuth(async (event) => {
 	const authOptions = {
 		providers: [
 			GitHub({
@@ -25,12 +25,20 @@ export const { handle, signIn, signOut } = SvelteKitAuth(async () => {
 		],
 		callbacks: {
 			jwt({ token, profile }) {
-				if (profile) token.login = profile.login;
+				if (profile) {
+					token.login = profile.login;
+					token.id = profile.id.toString();
+				}
 				return token;
 			},
 			async session({ session, token }) {
 				if (session.user && token) {
-					session.user.id = token.sub;
+					event
+						.fetch('/api/user/ensure-user')
+
+						.catch((err) => console.log(err));
+
+					session.user.id = token.id;
 					session.user.username = token.login;
 				}
 				return session;
