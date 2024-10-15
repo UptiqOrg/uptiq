@@ -5,7 +5,7 @@ import { ensureUser } from './user.service';
 
 export const userRouter = new Hono();
 
-export const postSignIn = async (context: Context) => {
+export const ensureUserController = async (context: Context) => {
 	const { token } = await getAuthUser(context);
 	if (!token) return context.status(401);
 
@@ -24,4 +24,4 @@ export const postSignIn = async (context: Context) => {
 };
 
 userRouter.use(verifyAuth());
-userRouter.get('/ensure-user', postSignIn);
+userRouter.get('/ensure-user', ensureUserController);
