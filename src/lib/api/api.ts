@@ -9,12 +9,10 @@ import {
 } from '$env/static/private';
 import { userRouter } from './user/user.controller';
 
-const router = new Hono();
-router.use('*', initAuthConfig(getAuthConfig));
+export const api = new Hono().basePath('/api');
 
-router.route('/user', userRouter);
-
-export const api = new Hono().route('/api', router);
+api.use('*', initAuthConfig(getAuthConfig));
+api.route('/user', userRouter);
 
 function getAuthConfig(): AuthConfig {
 	return {
