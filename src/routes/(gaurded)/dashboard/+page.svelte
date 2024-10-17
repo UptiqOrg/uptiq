@@ -1089,7 +1089,7 @@
 
 <Header title="Dashboard" />
 <div class="w-full columns-sm gap-4">
-	{#each data as { website, statuses }}
+	{#each data as { website, statuses } (website.id)}
 		<StatusCard {website} {statuses} />
 	{/each}
 </div>
