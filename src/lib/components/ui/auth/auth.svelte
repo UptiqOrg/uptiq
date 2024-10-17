@@ -11,26 +11,40 @@
 	{#if $page.data.session}
 		<DropdownMenu.Root>
 			<DropdownMenu.Trigger asChild let:builder>
-				<Button variant="ghost" builders={[builder]} class="relative h-8 w-8 rounded-full">
-					<Avatar.Root class="h-9 w-9">
-						<Avatar.Image
-							src={$page.data.session.user?.image}
-							alt="@{$page.data.session.user?.name}"
-						/>
-						<Avatar.Fallback>{$page.data.session.user?.name}</Avatar.Fallback>
-					</Avatar.Root>
-				</Button>
+				{#if $page.url.pathname !== '/'}
+					<Button
+						size="lg"
+						variant="outline"
+						builders={[builder]}
+						class="relative w-full justify-between px-3 py-2"
+					>
+						<div class="flex flex-col space-y-1 text-left">
+							<p class="text-sm font-medium leading-none">{$page.data.session.user?.name}</p>
+							<p class="text-xs leading-none text-muted-foreground">
+								{$page.data.session.user?.email}
+							</p>
+						</div>
+						<Avatar.Root class="h-9 w-9">
+							<Avatar.Image
+								src={$page.data.session.user?.image}
+								alt="@{$page.data.session.user?.name}"
+							/>
+							<Avatar.Fallback>{($page.data.session.user?.name ?? '')[0]}</Avatar.Fallback>
+						</Avatar.Root>
+					</Button>
+				{:else}
+					<Button builders={[builder]} variant="ghost" size="icon" class="rounded-full">
+						<Avatar.Root class="h-10 w-10">
+							<Avatar.Image
+								src={$page.data.session.user?.image}
+								alt="@{$page.data.session.user?.name}"
+							/>
+							<Avatar.Fallback>{($page.data.session.user?.name ?? '')[0]}</Avatar.Fallback>
+						</Avatar.Root>
+					</Button>
+				{/if}
 			</DropdownMenu.Trigger>
 			<DropdownMenu.Content class="w-56" align="end">
-				<DropdownMenu.Label class="font-normal">
-					<div class="flex flex-col space-y-1">
-						<p class="text-sm font-medium leading-none">{$page.data.session.user?.name}</p>
-						<p class="text-xs leading-none text-muted-foreground">
-							{$page.data.session.user?.email}
-						</p>
-					</div>
-				</DropdownMenu.Label>
-				<DropdownMenu.Separator />
 				<DropdownMenu.Group>
 					<DropdownMenu.Item href="/dashboard">Dashboard</DropdownMenu.Item>
 					<DropdownMenu.Item>Settings</DropdownMenu.Item>
