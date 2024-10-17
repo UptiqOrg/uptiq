@@ -54,13 +54,7 @@
 		</DropdownMenu.Root>
 	{:else}
 		<Button variant="outline">
-			<SignIn
-				options={{
-					redirectTo: $page.data.redirectTo
-						? `/${decodeURIComponent($page.data.redirectTo).slice(1)}`
-						: `/dashboard`
-				}}
-			/>
+			<SignIn options={{ redirectTo: '/projects' }} />
 			<GitHub class="ml-2 h-5 w-5" />
 		</Button>
 	{/if}
