@@ -1,17 +1,14 @@
 <script lang="ts">
-	import type { SelectUptimeCheck } from '$lib/db/schema';
-	import { getMinutesAgo } from '$lib/utils';
-
-	export let statuses: SelectUptimeCheck[] = [];
+	import type { SelectWebsiteStatusCard } from '$lib/db/schema';
+	export let website: SelectWebsiteStatusCard;
 </script>
 
 <div class="p-3">
-	<h4 class="text-xs text-muted-foreground">Last Pinged</h4>
+	<h4 class="text-xs text-muted-foreground">Check Every</h4>
 	<h2 class="text-xl">
-		{#if statuses[statuses.length - 1].createdAt}
-			{@const { time, type } = getMinutesAgo(new Date(statuses[statuses.length - 1].createdAt))}
-			{time}
-			<span class="text-sm">{type} ago</span>
-		{/if}
+		{website.checkInterval}
+		<span class="text-sm">
+			{#if website.checkInterval === 1}min{:else}mins{/if}
+		</span>
 	</h2>
 </div>
