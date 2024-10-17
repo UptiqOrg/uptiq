@@ -119,4 +119,14 @@ export const alertsRelations = relations(alerts, ({ one }) => ({
 	})
 }));
 
+// Insert types
 export type InsertUser = typeof users.$inferInsert;
+
+// Select types
+export type SelectUptimeCheck = typeof uptimeChecks.$inferSelect;
+
+// Partial Select types
+export type SelectWebsiteStatusCard = Pick<
+	typeof websites.$inferSelect,
+	'id' | 'name' | 'url' | 'checkInterval'
+>;
