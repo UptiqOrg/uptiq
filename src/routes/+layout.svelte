@@ -2,6 +2,7 @@
 	import '../app.css';
 	import '../font.css';
 	import { metaStore } from '$lib/store/meta.store';
+	import Navbar from '$lib/components/ui/navbar/navbar.svelte';
 
 	let innerWidth = 0;
 
@@ -15,4 +16,9 @@
 <svelte:head>
 	<title>upTiq</title>
 </svelte:head>
-<slot />
+<Navbar />
+<main class="h-screen w-screen overflow-y-auto overflow-x-hidden bg-secondary pt-20">
+	<div class="container mx-auto">
+		<slot />
+	</div>
+</main>
