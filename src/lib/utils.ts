@@ -55,9 +55,7 @@ export const flyAndScale = (
 	};
 };
 
-export const prettifyDate = (dateString: string): string => {
-	const date = new Date(dateString);
-
+export const prettifyDate = (date: Date): string => {
 	const timeFormatter = new Intl.DateTimeFormat('en-US', {
 		hour: '2-digit',
 		minute: '2-digit',
@@ -72,24 +70,5 @@ export const prettifyDate = (dateString: string): string => {
 	const time = timeFormatter.format(date);
 	const formattedDate = dateFormatter.format(date);
 
-	return `${time} - ${formattedDate}`;
-};
-
-export const getMinutesAgo = (dateTime: Date): { time: number; type: string } => {
-	const now = new Date();
-	const diffMs = now.getTime() - dateTime.getTime();
-	const diffMins = Math.round(diffMs / 60000);
-	const hours = Math.floor(diffMins / 60);
-	const days = Math.floor(diffMins / 1440);
-
-	switch (true) {
-		case diffMins === 1:
-			return { time: 1, type: 'min' };
-		case diffMins < 60:
-			return { time: diffMins, type: 'mins' };
-		case diffMins < 1440:
-			return { time: hours, type: hours === 1 ? 'hour' : 'hours' };
-		default:
-			return { time: days, type: days === 1 ? 'day' : 'days' };
-	}
+	return `${time}, ${formattedDate}`;
 };

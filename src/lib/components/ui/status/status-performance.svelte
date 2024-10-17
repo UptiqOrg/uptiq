@@ -14,7 +14,11 @@
 </script>
 
 <div class="p-3">
-	<h4 class="text-xs text-muted-foreground">Average Latency</h4>
+	<h4 class="text-xs text-muted-foreground">
+		<span class="inline-flex sm:hidden">Avg</span>
+		<span class="hidden sm:inline-flex">Average</span>
+		<span>Latency</span>
+	</h4>
 	<h2 class="text-xl">
 		{avgResponseTime}
 		<span class="text-sm">ms</span>

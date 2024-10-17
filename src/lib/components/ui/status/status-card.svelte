@@ -22,9 +22,9 @@
 	<div class="m-2 grid grid-cols-3 gap-2 divide-x rounded-lg border">
 		<StatusAvailability {statuses} />
 		<StatusPerformance {statuses} />
-		<StatusPing {statuses} />
+		<StatusPing {website} />
 	</div>
-	<div class="h-40 w-full rounded bg-background p-4">
+	<div class="w-full p-4">
 		<StatusChart {statuses} />
 	</div>
 </Card.Root>

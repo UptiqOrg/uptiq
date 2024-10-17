@@ -53,23 +53,7 @@
 					scales: {
 						x: {
 							ticks: {
-								maxRotation: 0,
-								minRotation: 0,
-								callback: function (
-									this: ScaleType,
-									value: string | number,
-									index: number,
-									ticks: unknown[]
-								): string | null {
-									if (
-										index === 0 ||
-										index === Math.floor((ticks.length - 1) / 2) ||
-										index === ticks.length - 1
-									) {
-										return prettifyDate(this.getLabelForValue(value));
-									}
-									return '';
-								}
+								display: false
 							},
 							grid: {
 								color: 'transparent'
@@ -87,4 +71,11 @@
 	});
 </script>
 
-<canvas bind:this={barChartElement} />
+<div class="h-32">
+	<canvas bind:this={barChartElement} />
+</div>
+<div class="mt-1 flex items-center justify-between text-xs text-muted-foreground">
+	<div>{prettifyDate(new Date(statuses[0].createdAt))}</div>
+	<div>{prettifyDate(new Date(statuses[Math.ceil(statuses.length / 2)].createdAt))}</div>
+	<div>{prettifyDate(new Date(statuses[statuses.length - 1].createdAt))}</div>
+</div>
