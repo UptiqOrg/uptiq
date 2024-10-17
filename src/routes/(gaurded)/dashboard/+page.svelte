@@ -3,7 +3,7 @@
 	import Header from '$lib/components/ui/dashboard/header.svelte';
 	import type { SelectWebsiteStatusCard, SelectUptimeCheck } from '$lib/db/schema';
 
-	let data = [
+	let data: { website: SelectWebsiteStatusCard; statuses: SelectUptimeCheck[] }[] = [
 		{
 			website: {
 				id: 1,
@@ -1084,7 +1084,7 @@
 				}
 			]
 		}
-	] as unknown as { website: SelectWebsiteStatusCard; statuses: SelectUptimeCheck[] }[];
+	];
 </script>
 
 <Header title="Dashboard" />
