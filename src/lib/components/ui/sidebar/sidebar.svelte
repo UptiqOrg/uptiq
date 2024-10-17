@@ -3,6 +3,8 @@
 	import { onNavigate } from '$app/navigation';
 	import { cn } from '$lib/utils';
 	import { navLinks } from './constants';
+	import Auth from '$lib/components/ui/auth/auth.svelte';
+	import Logo from '$lib/components/ui/logo/logo.svelte';
 
 	$: isActive = (href: string): boolean => {
 		return $page.url.pathname === href;
@@ -20,20 +22,24 @@
 	});
 </script>
 
-<div
-	class="flex h-[calc(100vh-5rem)] w-full flex-col justify-between overflow-y-auto border-r py-12"
->
+<div class="flex h-screen w-full flex-col justify-between overflow-y-auto border-r p-6 pt-10">
 	<div>
-		{#each navLinks as { href, title, icon }}
-			<a
-				aria-current={isActive(href) ? 'page' : undefined}
-				{href}
-				class={cn('mx-6 flex items-center bg-transparent px-5 py-3')}
-			>
-				<svelte:component this={icon} class="mr-3 h-5 w-5" />
-				<span>{title}</span>
-			</a>
-		{/each}
+		<Logo />
+		<div class="mt-10">
+			{#each navLinks as { href, title, icon }}
+				<a
+					aria-current={isActive(href) ? 'page' : undefined}
+					{href}
+					class={cn('flex items-center bg-transparent px-5 py-3')}
+				>
+					<svelte:component this={icon} class="mr-3 h-5 w-5" />
+					<span>{title}</span>
+				</a>
+			{/each}
+		</div>
+	</div>
+	<div>
+		<Auth />
 	</div>
 </div>
 
