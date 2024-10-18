@@ -2,13 +2,13 @@ import { db } from '$lib/db/drizzle';
 import { users, type InsertUser } from '$lib/db/schema';
 import { eq } from 'drizzle-orm';
 
-export const checkUserExists = async (githubUserId: string): Promise<boolean> => {
-	const result = await db
-		.select({ id: users.id })
-		.from(users)
-		.where(eq(users.githubUserId, githubUserId))
-		.limit(1);
+export const isUserPro = async (id: string): Promise<boolean> => {
+	const user = await db.select({ pro: users.pro }).from(users).where(eq(users.id, id)).limit(1);
+	return user.length > 0 && user[0].pro === true;
+};
 
+export const checkUserExists = async (id: string): Promise<boolean> => {
+	const result = await db.select({ id: users.id }).from(users).where(eq(users.id, id)).limit(1);
 	return result.length > 0;
 };
 
@@ -17,8 +17,13 @@ export const createUser = async (user: InsertUser) => {
 	return result[0];
 };
 
+export const getUser = async (id: string): Promise<string | null> => {
+	const user = await db.select({ id: users.id }).from(users).where(eq(users.id, id)).limit(1);
+	return user.length > 0 ? user[0].id : null;
+};
+
 export const ensureUser = async (user: InsertUser): Promise<void> => {
-	const exists = await checkUserExists(user.githubUserId);
+	const exists = await checkUserExists(user.id);
 	if (exists) return;
 
 	await createUser(user);
