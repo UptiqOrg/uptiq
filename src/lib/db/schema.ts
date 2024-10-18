@@ -3,9 +3,9 @@ import { sql } from 'drizzle-orm';
 
 // Users table
 export const users = sqliteTable('users', {
-	id: integer('id').primaryKey({ autoIncrement: true }),
+	id: text('id').primaryKey(),
 	name: text('name'),
-	githubUserId: text('github_user_id').notNull().unique(),
+	pro: integer('pro', { mode: 'boolean' }).default(false),
 	username: text('username').notNull().unique(),
 	email: text('email').notNull().unique(),
 	createdAt: integer('created_at', { mode: 'timestamp' })
@@ -19,7 +19,8 @@ export const users = sqliteTable('users', {
 // Projects table
 export const projects = sqliteTable('projects', {
 	id: integer('id').primaryKey({ autoIncrement: true }),
-	userId: integer('user_id')
+	slug: text('slug').notNull().unique(),
+	userId: text('user_id')
 		.notNull()
 		.references(() => users.id),
 	name: text('name').notNull(),
@@ -83,6 +84,7 @@ export const alerts = sqliteTable('alerts', {
 
 // Relations
 import { relations } from 'drizzle-orm';
+import { createInsertSchema } from 'drizzle-zod';
 
 export const usersRelations = relations(users, ({ many }) => ({
 	projects: many(projects)
@@ -121,12 +123,16 @@ export const alertsRelations = relations(alerts, ({ one }) => ({
 
 // Insert types
 export type InsertUser = typeof users.$inferInsert;
+export type InsertProject = typeof projects.$inferInsert;
 
 // Select types
 export type SelectUptimeCheck = typeof uptimeChecks.$inferSelect;
+export type SelectProject = typeof projects.$inferSelect;
+export type SelectWebsite = typeof websites.$inferSelect;
 
 // Partial Select types
-export type SelectWebsiteStatusCard = Pick<
-	typeof websites.$inferSelect,
-	'id' | 'name' | 'url' | 'checkInterval'
->;
+export type SelectWebsiteStatusCard = Pick<SelectWebsite, 'id' | 'name' | 'url' | 'checkInterval'>;
+export type SelectProjectPartial = Pick<SelectProject, 'id' | 'slug' | 'name' | 'description'>;
+
+// Zod Schemas
+export const InsertProjectSchema = createInsertSchema(projects);
