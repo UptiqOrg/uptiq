@@ -1,16 +1,15 @@
 import { Hono, type Context } from 'hono';
-
-import { getAuthUser, verifyAuth } from '@hono/auth-js';
+import { verifyAuth } from '@hono/auth-js';
 import { ensureUser } from './user.service';
 
 export const userRouter = new Hono();
 
 export const ensureUserController = async (context: Context) => {
-	const { token } = await getAuthUser(context);
+	const { token } = context.get('authUser');
 	if (!token) return context.status(401);
 
 	const user = {
-		githubUserId: token.id,
+		id: token.id,
 		username: token.login,
 		email: token.email,
 		name: token.name
