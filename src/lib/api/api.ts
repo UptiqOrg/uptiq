@@ -8,11 +8,13 @@ import {
 	SECRET_AUTH_SECRET
 } from '$env/static/private';
 import { userRouter } from './user/user.controller';
+import { projectsRouter } from './projects/projects.controller';
 
 export const api = new Hono().basePath('/api');
 
 api.use(initAuthConfig(getAuthConfig));
 api.route('/user', userRouter);
+api.route('/projects', projectsRouter);
 
 function getAuthConfig(): AuthConfig {
 	return {
