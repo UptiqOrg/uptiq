@@ -17,11 +17,6 @@ export const createUser = async (user: InsertUser) => {
 	return result[0];
 };
 
-export const getUser = async (id: string): Promise<string | null> => {
-	const user = await db.select({ id: users.id }).from(users).where(eq(users.id, id)).limit(1);
-	return user.length > 0 ? user[0].id : null;
-};
-
 export const ensureUser = async (user: InsertUser): Promise<void> => {
 	const exists = await checkUserExists(user.id);
 	if (exists) return;
