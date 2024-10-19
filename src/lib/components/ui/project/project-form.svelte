@@ -1,13 +1,15 @@
 <script lang="ts">
+	import { projectStore, selectedProjectIdStore } from '$lib/store/project.store';
 	import { Button } from '$lib/components/ui/button';
 	import { Input } from '$lib/components/ui/input';
 	import { Textarea } from '$lib/components/ui/textarea';
-	import type { SelectProjectPartial } from '$lib/db/schema';
 	import CircleAlert from 'lucide-svelte/icons/circle-alert';
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
+	import { get } from 'svelte/store';
 
-	export let selectedProject: SelectProjectPartial | null;
 	export let showProjectFormDialog: boolean;
+
+	let selectedProject = $projectStore.get($selectedProjectIdStore ?? '');
 	let name = selectedProject ? selectedProject.name : '';
 	let slug = selectedProject ? selectedProject.slug : '';
 	let description = selectedProject ? selectedProject.description : '';
@@ -27,14 +29,22 @@
 				return res.json();
 			})
 			.then((data) => {
-				if (data.error) formError = data.error;
-				selectedProject = data.project;
+				if (data.error) {
+					formError = data.error;
+					return;
+				} else {
+					projectStore.update((projectMap) => {
+						projectMap.set(String(data.id), data);
+						return projectMap;
+					});
+				}
+				showProjectFormDialog = false;
 			})
 			.catch((err) => {
-				formError = err;
+				console.log(err);
+				formError = 'An error occurred. Please try again later.';
 			});
 
-		showProjectFormDialog = false;
 		loading = false;
 	};
 </script>
