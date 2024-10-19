@@ -28,7 +28,7 @@
 {#if selectedProject}
 	<div>
 		<div class="mb-4">
-			Are you sure you want to delete the project - {selectedProject.name} ({selectedProject.slug})?
+			Delete - {selectedProject.name} ({selectedProject.slug})?
 		</div>
 		<Button variant="destructive" on:click={deleteProject}>
 			Confirm

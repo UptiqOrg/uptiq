@@ -42,20 +42,28 @@
 		{/each}
 	{/if}
 </div>
-
 <Dialog.Root bind:open={showProjectFormDialog}>
 	<Dialog.Content>
-		<Dialog.Title>{get(selectedProjectIdStore) ? 'Update' : 'Add'} Project</Dialog.Title>
-		<Dialog.Description>
-			<ProjectForm bind:showProjectFormDialog />
-		</Dialog.Description>
+		<Dialog.Header>
+			<Dialog.Title>{$selectedProjectIdStore ? 'Update' : 'Add'} Project</Dialog.Title>
+			<Dialog.Description>
+				{$selectedProjectIdStore
+					? 'Update the details of your existing project.'
+					: 'Enter the details for your new project.'}
+			</Dialog.Description>
+		</Dialog.Header>
+		<ProjectForm bind:showProjectFormDialog />
 	</Dialog.Content>
 </Dialog.Root>
+
 <Dialog.Root bind:open={showDeleteProjectDialog}>
 	<Dialog.Content>
-		<Dialog.Title>Delete Project</Dialog.Title>
-		<Dialog.Description>
-			<ProjectDelete bind:showDeleteProjectDialog />
-		</Dialog.Description>
+		<Dialog.Header>
+			<Dialog.Title>Delete Project</Dialog.Title>
+			<Dialog.Description>
+				Are you sure you want to delete this project? This action cannot be undone.
+			</Dialog.Description>
+		</Dialog.Header>
+		<ProjectDelete bind:showDeleteProjectDialog />
 	</Dialog.Content>
 </Dialog.Root>
