@@ -99,5 +99,4 @@ projectsRouter.get('/:slug', getProjectController);
 projectsRouter.get('/', getProjectsController);
 projectsRouter.post('/', validateRequestBody(PartialInsertProjectSchema), postProjectController);
 projectsRouter.put('/:slug', validateRequestBody(PartialInsertProjectSchema), putProjectController);
-
-projectsRouter.delete('/:slug', postProjectController);
+projectsRouter.delete('/:slug', deleteProjectController);
