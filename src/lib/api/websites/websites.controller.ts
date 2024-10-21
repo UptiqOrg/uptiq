@@ -61,7 +61,7 @@ export const postWebsitesController = async (context: Context) => {
 
 	const website = context.get('requestBody');
 
-	const createProjectResponse = await createWebsite({
+	const createWebsiteResponse = await createWebsite({
 		userId: String(token.id),
 		projectId: project.id,
 		name: website.name as string,
@@ -70,10 +70,10 @@ export const postWebsitesController = async (context: Context) => {
 	});
 
 	return context.json(
-		createProjectResponse.error
-			? { error: createProjectResponse.error }
-			: createProjectResponse.data,
-		createProjectResponse.status
+		createWebsiteResponse.error
+			? { error: createWebsiteResponse.error }
+			: createWebsiteResponse.data,
+		createWebsiteResponse.status
 	);
 };
 
