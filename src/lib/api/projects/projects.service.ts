@@ -4,6 +4,7 @@ import { projects, type InsertProject, type SelectProjectPartial } from '$lib/db
 import { isUserPro } from '../user/user.service';
 import type { ServiceResponse } from '../types';
 import { prettifyErrors } from '$lib/db/utils';
+import type { StatusCode } from 'hono/utils/http-status';
 
 export const canUserCreateProject = async (userId: string): Promise<boolean> => {
 	if (await isUserPro(userId)) return true;
@@ -28,7 +29,7 @@ export const getAllProjects = async (userId: string): Promise<SelectProjectParti
 		.where(eq(projects.userId, userId));
 };
 
-export const getProject = async (
+export const getProjectBySlug = async (
 	userId: string,
 	projectSlug: string
 ): Promise<SelectProjectPartial | null> => {
@@ -52,7 +53,7 @@ export const createProject = async (
 	if (!(await canUserCreateProject(project.userId))) {
 		return {
 			status: 403,
-			error: 'User cannot create more projects'
+			error: 'Hobby users can create 2 projects!'
 		};
 	}
 
@@ -80,7 +81,7 @@ export const updateProject = async (
 	slug: string,
 	updatedProjectInput: InsertProject
 ): Promise<ServiceResponse<SelectProjectPartial>> => {
-	const project = await getProject(userId, slug);
+	const project = await getProjectBySlug(userId, slug);
 
 	if (!project)
 		return {
@@ -100,13 +101,13 @@ export const updateProject = async (
 		})
 		.then((response) => {
 			return {
-				status: 200,
+				status: 200 as StatusCode,
 				data: response[0]
 			};
 		})
 		.catch((error) => {
 			return {
-				status: 400,
+				status: 400 as StatusCode,
 				error: error.message
 			};
 		});
@@ -115,28 +116,25 @@ export const updateProject = async (
 export const deleteProject = async (
 	userId: string,
 	slug: string
-): Promise<ServiceResponse<{ id: number }>> => {
-	const project = await getProject(userId, slug);
-	if (!project) {
-		return {
-			status: 404,
-			error: 'Project not found'
-		};
-	}
-
+): Promise<ServiceResponse<{ deletedId: number }>> => {
 	return await db
 		.delete(projects)
 		.where(and(eq(projects.userId, userId), eq(projects.slug, slug)))
 		.returning({ deletedId: projects.id })
 		.then((response) => {
+			if (response.length === 0)
+				return {
+					status: 404 as StatusCode,
+					error: 'Project not found'
+				};
 			return {
-				status: 200,
+				status: 200 as StatusCode,
 				data: response[0]
 			};
 		})
 		.catch((error) => {
 			return {
-				status: 400,
+				status: 400 as StatusCode,
 				error: error.message
 			};
 		});

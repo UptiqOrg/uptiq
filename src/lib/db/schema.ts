@@ -39,10 +39,12 @@ export const websites = sqliteTable('websites', {
 	projectId: integer('project_id')
 		.notNull()
 		.references(() => projects.id),
+	userId: text('user_id')
+		.notNull()
+		.references(() => users.id),
 	url: text('url').notNull(),
 	name: text('name').notNull(),
 	checkInterval: integer('check_interval').notNull().default(300), // in seconds
-	status: text('status').notNull().default('unknown'),
 	createdAt: integer('created_at', { mode: 'timestamp' })
 		.notNull()
 		.default(sql`CURRENT_TIMESTAMP`),
@@ -103,6 +105,10 @@ export const websitesRelations = relations(websites, ({ one, many }) => ({
 		fields: [websites.projectId],
 		references: [projects.id]
 	}),
+	user: one(users, {
+		fields: [websites.userId],
+		references: [users.id]
+	}),
 	uptimeChecks: many(uptimeChecks),
 	alerts: many(alerts)
 }));
@@ -124,6 +130,7 @@ export const alertsRelations = relations(alerts, ({ one }) => ({
 // Insert types
 export type InsertUser = typeof users.$inferInsert;
 export type InsertProject = typeof projects.$inferInsert;
+export type InsertWebsite = typeof websites.$inferInsert;
 
 // Select types
 export type SelectUptimeCheck = typeof uptimeChecks.$inferSelect;
@@ -133,6 +140,8 @@ export type SelectWebsite = typeof websites.$inferSelect;
 // Partial Select types
 export type SelectWebsiteStatusCard = Pick<SelectWebsite, 'id' | 'name' | 'url' | 'checkInterval'>;
 export type SelectProjectPartial = Pick<SelectProject, 'id' | 'slug' | 'name' | 'description'>;
+export type SelectWebsitePartial = Pick<SelectWebsite, 'id' | 'name' | 'url' | 'checkInterval'>;
 
 // Zod Schemas
 export const InsertProjectSchema = createInsertSchema(projects);
+export const InsertWebsiteSchema = createInsertSchema(websites);
