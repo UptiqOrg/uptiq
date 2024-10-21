@@ -7,7 +7,7 @@ import { isUserPro } from '../user/user.service';
 import { prettifyErrors } from '$lib/db/utils';
 import { getProjectBySlug } from '../projects/projects.service';
 
-export const canPorojectHaveMoreWebsite = async (
+export const canProjectHaveMoreWebsite = async (
 	userId: string,
 	projectId: number
 ): Promise<boolean> => {
@@ -92,7 +92,7 @@ export const getWebsites = async (
 export const createWebsite = async (
 	website: InsertWebsite
 ): Promise<ServiceResponse<SelectWebsitePartial>> => {
-	if (!(await canPorojectHaveMoreWebsite(website.userId, website.projectId)))
+	if (!(await canProjectHaveMoreWebsite(website.userId, website.projectId)))
 		return {
 			status: 403,
 			error: 'Hobby users can create 2 websites per project!'
