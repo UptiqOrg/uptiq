@@ -18,10 +18,10 @@ export const getWebsiteController = async (context: Context) => {
 	if (!token) return context.status(401);
 
 	const { slug } = context.req.param();
-	if (!slug) return context.json({ error: 'Invalid project id' }, 400);
+	if (!slug) return context.json({ error: 'Missing project slug' }, 400);
 
 	const { websiteId } = context.req.param();
-	if (!websiteId) return context.json({ error: 'Invalid id' }, 400);
+	if (!websiteId) return context.json({ error: 'Missing website ID' }, 400);
 
 	const project = await getProjectBySlug(String(token.id), slug);
 	if (!project) return context.json({ error: 'Project not found' }, 404);
@@ -39,7 +39,7 @@ export const getWebsitesController = async (context: Context) => {
 	if (!token) return context.status(401);
 
 	const { slug } = context.req.param();
-	if (!slug) return context.json({ error: 'Invalid project id' }, 400);
+	if (!slug) return context.json({ error: 'Missing project slug' }, 400);
 
 	const websiteResponse = await getWebsites(String(token.id), slug);
 
@@ -54,7 +54,7 @@ export const postWebsitesController = async (context: Context) => {
 	if (!token) return context.status(401);
 
 	const { slug } = context.req.param();
-	if (!slug) return context.json({ error: 'Invalid slug' }, 400);
+	if (!slug) return context.json({ error: 'Missing project slug' }, 400);
 
 	const project = await getProjectBySlug(String(token.id), slug);
 	if (!project) return context.json({ error: 'Project not found' }, 404);
@@ -82,7 +82,7 @@ export const putWebsitesController = async (context: Context) => {
 	if (!token) return context.status(401);
 
 	const { websiteId } = context.req.param();
-	if (!websiteId) return context.json({ error: 'Invalid website id' }, 400);
+	if (!websiteId) return context.json({ error: 'Missing website ID' }, 400);
 
 	const requestBody = context.get('requestBody');
 
@@ -101,7 +101,7 @@ export const deleteWebsitesController = async (context: Context) => {
 	if (!token) return context.status(401);
 
 	const { websiteId } = context.req.param();
-	if (!websiteId) return context.json({ error: 'Invalid website id' }, 400);
+	if (!websiteId) return context.json({ error: 'Missing website ID' }, 400);
 
 	const deleteWebsiteResponse = await deleteWebsite(String(token.id), +websiteId);
 
