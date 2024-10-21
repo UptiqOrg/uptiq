@@ -116,20 +116,17 @@ export const updateProject = async (
 export const deleteProject = async (
 	userId: string,
 	slug: string
-): Promise<ServiceResponse<{ id: number }>> => {
-	const project = await getProjectBySlug(userId, slug);
-	if (!project) {
-		return {
-			status: 404,
-			error: 'Project not found'
-		};
-	}
-
+): Promise<ServiceResponse<{ deletedId: number }>> => {
 	return await db
 		.delete(projects)
 		.where(and(eq(projects.userId, userId), eq(projects.slug, slug)))
 		.returning({ deletedId: projects.id })
 		.then((response) => {
+			if (response.length === 0)
+				return {
+					status: 404 as StatusCode,
+					error: 'Project not found'
+				};
 			return {
 				status: 200 as StatusCode,
 				data: response[0]

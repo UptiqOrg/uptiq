@@ -153,21 +153,18 @@ export const updateWebsite = async (
 export const deleteWebsite = async (
 	userId: string,
 	websiteId: number
-): Promise<ServiceResponse<SelectWebsitePartial>> => {
-	const website = await getWebsite(userId, websiteId);
-
-	if (!website) {
-		return {
-			status: 404 as StatusCode,
-			error: 'Website not found'
-		};
-	}
-
+): Promise<ServiceResponse<{ deletedId: number }>> => {
 	return await db
 		.delete(websites)
 		.where(and(eq(websites.userId, userId), eq(websites.id, websiteId)))
 		.returning({ deletedId: websites.id })
 		.then((response) => {
+			if (response.length === 0) {
+				return {
+					status: 404 as StatusCode,
+					error: 'Website not found'
+				};
+			}
 			return {
 				status: 200 as StatusCode,
 				data: response[0]
