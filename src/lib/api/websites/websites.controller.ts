@@ -17,10 +17,16 @@ export const getWebsiteController = async (context: Context) => {
 	const { token } = context.get('authUser');
 	if (!token) return context.status(401);
 
+	const { slug } = context.req.param();
+	if (!slug) return context.json({ error: 'Invalid project id' }, 400);
+
 	const { websiteId } = context.req.param();
 	if (!websiteId) return context.json({ error: 'Invalid id' }, 400);
 
-	const websiteResponse = await getWebsite(token.id as string, +websiteId);
+	const project = await getProjectBySlug(String(token.id), slug);
+	if (!project) return context.json({ error: 'Project not found' }, 404);
+
+	const websiteResponse = await getWebsite(String(token.id), +websiteId);
 
 	return context.json(
 		websiteResponse.error ? { error: websiteResponse.error } : websiteResponse.data,
@@ -32,10 +38,10 @@ export const getWebsitesController = async (context: Context) => {
 	const { token } = context.get('authUser');
 	if (!token) return context.status(401);
 
-	const { projectId } = context.req.param();
-	if (!projectId) return context.json({ error: 'Invalid project id' }, 400);
+	const { slug } = context.req.param();
+	if (!slug) return context.json({ error: 'Invalid project id' }, 400);
 
-	const websiteResponse = await getWebsites(String(token.id), +projectId);
+	const websiteResponse = await getWebsites(String(token.id), slug);
 
 	return context.json(
 		websiteResponse.error ? { error: websiteResponse.error } : websiteResponse.data,
@@ -115,8 +121,8 @@ const PartialInsertWebsiteSchema = InsertWebsitetSchema.pick({
 });
 
 websitesRouter.use(verifyAuth());
-websitesRouter.get('/:websiteId', getWebsiteController);
-websitesRouter.get('/:projectId', getWebsitesController);
+websitesRouter.get('/:slug/:websiteId', getWebsiteController);
+websitesRouter.get('/:slug', getWebsitesController);
 websitesRouter.post(
 	'/:slug',
 	validateRequestBody(PartialInsertWebsiteSchema),

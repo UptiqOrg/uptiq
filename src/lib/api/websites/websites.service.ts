@@ -5,6 +5,7 @@ import type { ServiceResponse } from '../types';
 import type { StatusCode } from 'hono/utils/http-status';
 import { isUserPro } from '../user/user.service';
 import { prettifyErrors } from '$lib/db/utils';
+import { getProjectBySlug } from '../projects/projects.service';
 
 export const canPorojectHaveMoreWebsite = async (
 	userId: string,
@@ -59,8 +60,12 @@ export const getWebsite = async (
 
 export const getWebsites = async (
 	userId: string,
-	projectId: number
-): Promise<ServiceResponse<SelectWebsitePartial>> => {
+	slug: string
+): Promise<ServiceResponse<SelectWebsitePartial[]>> => {
+	const project = await getProjectBySlug(userId, slug);
+
+	if (!project) return { status: 404, error: 'Project not found!' };
+
 	return await db
 		.select({
 			id: websites.id,
@@ -69,7 +74,7 @@ export const getWebsites = async (
 			url: websites.url
 		})
 		.from(websites)
-		.where(and(eq(websites.userId, userId), eq(websites.projectId, projectId)))
+		.where(and(eq(websites.userId, userId), eq(websites.projectId, project.id)))
 		.then((response) => {
 			return {
 				status: 200 as StatusCode,
