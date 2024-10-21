@@ -133,4 +133,4 @@ websitesRouter.put(
 	validateRequestBody(PartialInsertWebsiteSchema),
 	putWebsitesController
 );
-websitesRouter.delete(':websiteId', deleteWebsitesController);
+websitesRouter.delete('/:websiteId', deleteWebsitesController);
