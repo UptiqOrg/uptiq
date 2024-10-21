@@ -8,7 +8,7 @@ import {
 	updateWebsite
 } from './websites.service';
 import { validateRequestBody } from '../middlewares';
-import { InsertWebsitetSchema } from '$lib/db/schema';
+import { InsertWebsiteSchema } from '$lib/db/schema';
 import { getProjectBySlug } from '../projects/projects.service';
 
 export const websitesRouter = new Hono();
@@ -114,7 +114,7 @@ export const deleteWebsitesController = async (context: Context) => {
 	);
 };
 
-const PartialInsertWebsiteSchema = InsertWebsitetSchema.pick({
+const PartialInsertWebsiteSchema = InsertWebsiteSchema.pick({
 	name: true,
 	url: true,
 	checkInterval: true

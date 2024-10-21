@@ -144,4 +144,4 @@ export type SelectWebsitePartial = Pick<SelectWebsite, 'id' | 'name' | 'url' | '
 
 // Zod Schemas
 export const InsertProjectSchema = createInsertSchema(projects);
-export const InsertWebsitetSchema = createInsertSchema(websites);
+export const InsertWebsiteSchema = createInsertSchema(websites);
