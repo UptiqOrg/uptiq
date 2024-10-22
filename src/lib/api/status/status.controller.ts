@@ -39,6 +39,6 @@ export const getStatusPageController = async (context: Context) => {
 	);
 };
 
-statusRouter.get('/:websiteId', getStatusController);
 statusRouter.get('/page/:projectId', getStatusPageController);
 statusRouter.get('/project/:projectSlug', getStatusByProjectController);
+statusRouter.get('/:websiteId', getStatusController);
