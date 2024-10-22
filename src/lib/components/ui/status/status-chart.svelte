@@ -2,12 +2,11 @@
 	import { onMount } from 'svelte';
 	import { browser } from '$app/environment';
 	import { Chart, registerables } from 'chart.js';
-	import type { ScaleType } from 'chart.js';
 	import { prettifyDate } from '$lib/utils';
 	import { statusColorMap } from '$lib/components/ui/status/constants';
-	import type { SelectUptimeCheck } from '$lib/db/schema';
+	import type { SelectPartialStatus } from '$lib/db/schema';
 
-	export let statuses: SelectUptimeCheck[];
+	export let statuses: SelectPartialStatus[];
 
 	Chart.register(...registerables);
 	let barChartElement: HTMLCanvasElement;
@@ -16,9 +15,7 @@
 		datasets: [
 			{
 				label: 'Response Time (ms)',
-				labels: statuses.map(
-					({ status, statusCode }) => `\n Status: ${status} \n Status Code: ${statusCode}`
-				),
+				labels: statuses.map(({ statusCode }) => `Status Code: ${statusCode}`),
 				data: statuses.map(({ responseTime }) => responseTime),
 				backgroundColor: statuses.map((status) => statusColorMap[status.status])
 			}
@@ -34,9 +31,7 @@
 					responsive: true,
 					maintainAspectRatio: false,
 					plugins: {
-						legend: {
-							display: false
-						},
+						legend: { display: false },
 						tooltip: {
 							callbacks: {
 								label: function (context) {
@@ -52,17 +47,12 @@
 					},
 					scales: {
 						x: {
-							ticks: {
-								display: false
-							},
-							grid: {
-								color: 'transparent'
-							}
+							ticks: { display: false },
+							grid: { color: 'transparent' }
 						},
 						y: {
-							grid: {
-								color: '#f5f5f5'
-							}
+							grid: { color: '#f5f5f5' },
+							beginAtZero: true
 						}
 					}
 				}
