@@ -8,6 +8,19 @@
 
 <div>
 	<div class="mx-auto mb-2 flex w-full items-center justify-center gap-0.5">
+		{#each Array(50 - statuses.length).fill(undefined) as emptyStatus}
+			<HoverCard.Root openDelay={100} closeDelay={0}>
+				<HoverCard.Trigger
+					target="_blank"
+					rel="noreferrer noopener"
+					class="h-14 w-[2%] rounded-md"
+					style="background-color: {statusColorMap['maintenance']}"
+				/>
+				<HoverCard.Content class="w-fit">
+					<ul class="text-sm text-muted-foreground">No data available!</ul>
+				</HoverCard.Content>
+			</HoverCard.Root>
+		{/each}
 		{#each statuses as status}
 			<HoverCard.Root openDelay={100} closeDelay={0}>
 				<HoverCard.Trigger
