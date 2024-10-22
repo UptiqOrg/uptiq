@@ -37,7 +37,7 @@
 	<p>No projects found. Click "Add Project" to create your first project.</p>
 {:else}
 	<div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
-		{#each $projectStore.keys() as projectId}
+		{#each Array.from($projectStore.keys()) as projectId}
 			<ProjectCard {projectId} bind:showProjectFormDialog bind:showDeleteProjectDialog />
 		{/each}
 	</div>

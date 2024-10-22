@@ -43,7 +43,7 @@
 	<p>No websites found. Click "Add Site" to create your first website.</p>
 {:else}
 	<div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-		{#each $websiteStore.keys() as websiteId}
+		{#each Array.from($websiteStore.keys()) as websiteId}
 			<StatusCard {websiteId} bind:showWebsiteFormDialog bind:showDeleteWebsiteDialog />
 		{/each}
 	</div>
