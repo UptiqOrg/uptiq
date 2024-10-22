@@ -9,7 +9,7 @@
 	export let cr = 1;
 	export let fillColor = 'rgb(163 163 163 / 0.8)';
 
-	let className: any = '';
+	let className = '';
 	export { className as class };
 	let id = crypto.randomUUID().toString().slice(0, 10); // generating a unique ID for Components
 </script>

@@ -1,15 +1,15 @@
 <script lang="ts">
-	import type { SelectUptimeCheck } from '$lib/db/schema';
+	import type { SelectPartialStatus } from '$lib/db/schema';
 	import { onMount } from 'svelte';
 
-	export let statuses: SelectUptimeCheck[] = [];
+	export let statuses: SelectPartialStatus[] = [];
 	let availability = 0;
 
 	onMount(() => {
 		const total = statuses.length;
 		const up = statuses.filter(({ status }) => status === 'up').length;
 
-		availability = +((up / total) * 100).toFixed(2);
+		availability = total > 0 ? +((up / total) * 100).toFixed(2) : 0;
 	});
 </script>
 

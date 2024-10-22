@@ -1,15 +1,15 @@
 <script lang="ts">
-	import type { SelectUptimeCheck } from '$lib/db/schema';
+	import type { SelectPartialStatus } from '$lib/db/schema';
 	import { onMount } from 'svelte';
 
-	export let statuses: SelectUptimeCheck[] = [];
+	export let statuses: SelectPartialStatus[] = [];
 	let avgResponseTime = 0;
 
 	onMount(() => {
 		const total = statuses.length;
 		const sum = statuses.reduce((acc, { responseTime }) => acc + (responseTime ?? 0), 0);
 
-		avgResponseTime = +(sum / total).toFixed(2);
+		avgResponseTime = total > 0 ? +(sum / total).toFixed(2) : 0;
 	});
 </script>
 

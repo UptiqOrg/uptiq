@@ -5,11 +5,12 @@
 	import { Textarea } from '$lib/components/ui/textarea';
 	import CircleAlert from 'lucide-svelte/icons/circle-alert';
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
-	import { get } from 'svelte/store';
 
 	export let showProjectFormDialog: boolean;
 
-	let selectedProject = $projectStore.get($selectedProjectIdStore ?? '');
+	let selectedProject = $selectedProjectIdStore
+		? $projectStore.get($selectedProjectIdStore)
+		: undefined;
 	let name = selectedProject ? selectedProject.name : '';
 	let slug = selectedProject ? selectedProject.slug : '';
 	let description = selectedProject ? selectedProject.description : '';

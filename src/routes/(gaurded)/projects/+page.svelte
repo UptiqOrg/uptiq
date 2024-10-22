@@ -3,7 +3,6 @@
 	import { projectStore, selectedProjectIdStore } from '$lib/store/project.store';
 	import { Button } from '$lib/components/ui/button';
 	import * as Dialog from '$lib/components/ui/dialog';
-	import { get } from 'svelte/store';
 	import Header from '$lib/components/ui/dashboard/header.svelte';
 	import ProjectCard from '$lib/components/ui/project/project-card.svelte';
 	import ProjectForm from '$lib/components/ui/project/project-form.svelte';
@@ -31,17 +30,19 @@
 		Add Project
 	</Button>
 </section>
-<div class="w-full columns-xs gap-4">
-	{#if $projectStore === undefined}
-		<p>Loading projects...</p>
-	{:else if $projectStore.size === 0}
-		<p>No projects found. Click "Add Project" to create your first project.</p>
-	{:else}
-		{#each $projectStore.keys() as projectId}
+
+{#if $projectStore === undefined}
+	<p>Loading projects...</p>
+{:else if $projectStore.size === 0}
+	<p>No projects found. Click "Add Project" to create your first project.</p>
+{:else}
+	<div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
+		{#each Array.from($projectStore.keys()) as projectId}
 			<ProjectCard {projectId} bind:showProjectFormDialog bind:showDeleteProjectDialog />
 		{/each}
-	{/if}
-</div>
+	</div>
+{/if}
+
 <Dialog.Root bind:open={showProjectFormDialog}>
 	<Dialog.Content>
 		<Dialog.Header>

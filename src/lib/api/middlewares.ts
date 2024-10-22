@@ -1,5 +1,5 @@
 import type { Context, Next } from 'hono';
-import { z, ZodError } from 'zod';
+import { z } from 'zod';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export const validateRequestBody = <T extends z.ZodType<any, any>>(schema: T) => {

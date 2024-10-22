@@ -38,10 +38,10 @@ export const websites = sqliteTable('websites', {
 	id: integer('id').primaryKey({ autoIncrement: true }),
 	projectId: integer('project_id')
 		.notNull()
-		.references(() => projects.id),
+		.references(() => projects.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
 	userId: text('user_id')
 		.notNull()
-		.references(() => users.id),
+		.references(() => users.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
 	url: text('url').notNull(),
 	name: text('name').notNull(),
 	checkInterval: integer('check_interval').notNull().default(300), // in seconds
@@ -58,13 +58,13 @@ export const uptimeChecks = sqliteTable('uptime_checks', {
 	id: integer('id').primaryKey({ autoIncrement: true }),
 	websiteId: integer('website_id')
 		.notNull()
-		.references(() => websites.id),
+		.references(() => websites.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
 	status: text('status').notNull(),
 	responseTime: integer('response_time'), // in milliseconds
 	statusCode: integer('status_code'),
-	createdAt: integer('created_at', { mode: 'timestamp' })
+	createdAt: text('created_at')
 		.notNull()
-		.default(sql`CURRENT_TIMESTAMP`)
+		.default(sql`(current_timestamp)`)
 });
 
 // Alerts table
@@ -136,11 +136,16 @@ export type InsertWebsite = typeof websites.$inferInsert;
 export type SelectUptimeCheck = typeof uptimeChecks.$inferSelect;
 export type SelectProject = typeof projects.$inferSelect;
 export type SelectWebsite = typeof websites.$inferSelect;
+export type SelectStatus = typeof uptimeChecks.$inferSelect;
 
 // Partial Select types
 export type SelectWebsiteStatusCard = Pick<SelectWebsite, 'id' | 'name' | 'url' | 'checkInterval'>;
 export type SelectProjectPartial = Pick<SelectProject, 'id' | 'slug' | 'name' | 'description'>;
 export type SelectWebsitePartial = Pick<SelectWebsite, 'id' | 'name' | 'url' | 'checkInterval'>;
+export type SelectPartialStatus = Pick<
+	SelectStatus,
+	'status' | 'responseTime' | 'statusCode' | 'createdAt'
+>;
 
 // Zod Schemas
 export const InsertProjectSchema = createInsertSchema(projects);
