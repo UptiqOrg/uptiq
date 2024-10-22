@@ -3,7 +3,6 @@
 	import { projectStore, selectedProjectIdStore } from '$lib/store/project.store';
 	import { Button } from '$lib/components/ui/button';
 	import * as Dialog from '$lib/components/ui/dialog';
-	import { get } from 'svelte/store';
 	import Header from '$lib/components/ui/dashboard/header.svelte';
 	import ProjectCard from '$lib/components/ui/project/project-card.svelte';
 	import ProjectForm from '$lib/components/ui/project/project-form.svelte';
