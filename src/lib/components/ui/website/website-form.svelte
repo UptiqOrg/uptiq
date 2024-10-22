@@ -10,7 +10,9 @@
 
 	export let showWebsiteFormDialog: boolean;
 
-	let selectedWebsite = $websiteStore.get($selectedWebsiteIdStore ?? '');
+	let selectedWebsite = $selectedWebsiteIdStore
+		? $websiteStore.get($selectedWebsiteIdStore)
+		: undefined;
 	let name = selectedWebsite ? selectedWebsite.name : '';
 	let url = selectedWebsite ? selectedWebsite.url : '';
 	let checkInterval = selectedWebsite ? selectedWebsite.checkInterval : 5;

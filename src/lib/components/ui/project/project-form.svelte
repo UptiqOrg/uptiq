@@ -8,7 +8,9 @@
 
 	export let showProjectFormDialog: boolean;
 
-	let selectedProject = $projectStore.get($selectedProjectIdStore ?? '');
+	let selectedProject = $selectedProjectIdStore
+		? $projectStore.get($selectedProjectIdStore)
+		: undefined;
 	let name = selectedProject ? selectedProject.name : '';
 	let slug = selectedProject ? selectedProject.slug : '';
 	let description = selectedProject ? selectedProject.description : '';
