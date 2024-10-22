@@ -40,7 +40,7 @@
 {#if $websiteStore === undefined}
 	<p>Loading projects...</p>
 {:else if $websiteStore.size === 0}
-	<p>No projects found. Click "Add Project" to create your first project.</p>
+	<p>No websites found. Click "Add Site" to create your first website.</p>
 {:else}
 	<div class="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
 		{#each $websiteStore.keys() as websiteId}
