@@ -78,8 +78,6 @@ export const getStatusByProject = async (
 export const getStatusPage = async (
 	projectId: number
 ): Promise<ServiceResponse<StatusPageResponse[]>> => {
-	const response: StatusPageResponse[] = [];
-
 	const websitesResponse = await db
 		.select({
 			id: websites.id,
@@ -90,21 +88,21 @@ export const getStatusPage = async (
 		.from(websites)
 		.where(eq(websites.projectId, projectId));
 
-	for (const website of websitesResponse) {
+	const statusPromises = websitesResponse.map(async (website) => {
 		const statusResponse = await getStatus(website.id, 50);
 
 		if (statusResponse.status !== 200 || !statusResponse.data) {
-			return {
-				status: 500 as StatusCode,
-				error: 'Error fetching status'
-			};
+			// Optionally handle individual errors here
+			return null; // Exclude this website from the results
 		}
 
-		response.push({
+		return {
 			...website,
 			statuses: statusResponse.data
-		});
-	}
+		};
+	});
 
+	const statuses = await Promise.all(statusPromises);
+	const response = statuses.filter((website): website is StatusPageResponse => website !== null);
 	return { status: 200, data: response };
 };
