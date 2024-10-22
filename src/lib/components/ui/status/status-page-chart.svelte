@@ -33,8 +33,18 @@
 		{/each}
 	</div>
 	<div class="flex w-full items-center justify-between text-xs">
-		<div>{prettifyDate(new Date(statuses[0].createdAt))}</div>
-		<div>{prettifyDate(new Date(statuses[Math.ceil(statuses.length / 2)].createdAt))}</div>
-		<div>{prettifyDate(new Date(statuses[statuses.length - 1].createdAt))}</div>
+		{#if statuses.length > 0}
+			<div class="flex w-full items-center justify-between text-xs">
+				<div>{prettifyDate(new Date(statuses[0].createdAt))}</div>
+				{#if statuses.length > 2}
+					<div>
+						{prettifyDate(new Date(statuses[Math.floor((statuses.length - 1) / 2)].createdAt))}
+					</div>
+				{/if}
+				<div>{prettifyDate(new Date(statuses[statuses.length - 1].createdAt))}</div>
+			</div>
+		{:else}
+			<div class="text-center text-xs text-muted-foreground">No status history available</div>
+		{/if}
 	</div>
 </div>
