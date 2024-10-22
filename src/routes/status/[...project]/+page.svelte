@@ -23,6 +23,8 @@
 		const total = statusPageItems.length;
 		const operational = statusPageItems.filter(
 			(statusPageItem) =>
+				statusPageItem.statuses &&
+				statusPageItem.statuses.length > 0 &&
 				statusPageItem.statuses[statusPageItem.statuses.length - 1].status === 'up'
 		).length;
 
