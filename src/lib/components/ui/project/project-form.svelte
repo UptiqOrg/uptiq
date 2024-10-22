@@ -5,7 +5,6 @@
 	import { Textarea } from '$lib/components/ui/textarea';
 	import CircleAlert from 'lucide-svelte/icons/circle-alert';
 	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
-	import { get } from 'svelte/store';
 
 	export let showProjectFormDialog: boolean;
 
