@@ -30,17 +30,19 @@
 		Add Project
 	</Button>
 </section>
-<div class="w-full columns-xs gap-4">
-	{#if $projectStore === undefined}
-		<p>Loading projects...</p>
-	{:else if $projectStore.size === 0}
-		<p>No projects found. Click "Add Project" to create your first project.</p>
-	{:else}
+
+{#if $projectStore === undefined}
+	<p>Loading projects...</p>
+{:else if $projectStore.size === 0}
+	<p>No projects found. Click "Add Project" to create your first project.</p>
+{:else}
+	<div class="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4">
 		{#each $projectStore.keys() as projectId}
 			<ProjectCard {projectId} bind:showProjectFormDialog bind:showDeleteProjectDialog />
 		{/each}
-	{/if}
-</div>
+	</div>
+{/if}
+
 <Dialog.Root bind:open={showProjectFormDialog}>
 	<Dialog.Content>
 		<Dialog.Header>
