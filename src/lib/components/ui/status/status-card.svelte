@@ -11,7 +11,6 @@
 	import StatusPing from '$lib/components/ui/status/status-ping.svelte';
 	import EllipsisVertical from 'lucide-svelte/icons/ellipsis-vertical';
 	import { onMount } from 'svelte';
-	import LoaderCircle from 'lucide-svelte/icons/loader-circle';
 
 	export let websiteId: string;
 	export let showWebsiteFormDialog: boolean;
