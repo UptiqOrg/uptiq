@@ -3,5 +3,5 @@
 </script>
 
 {#if title}
-	<h1 class="my-8 text-3xl font-semibold">{title}</h1>
+	<h1 class="my-8 text-3xl font-medium">{title}</h1>
 {/if}
