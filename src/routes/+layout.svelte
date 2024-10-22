@@ -1,10 +1,13 @@
 <script>
 	import '../app.css';
 	import '../font.css';
+	import { dev } from '$app/environment';
 	import { metaStore } from '$lib/store/meta.store';
 	import Navbar from '$lib/components/ui/navbar/navbar.svelte';
+	import { inject } from '@vercel/analytics';
 
 	let innerWidth = 0;
+	inject({ mode: dev ? 'development' : 'production' });
 
 	$: metaStore.set({
 		isSmallScreen: innerWidth < 768,
