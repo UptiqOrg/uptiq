@@ -76,12 +76,12 @@
 				{#if !loadingStatuses}
 					<StatusAvailability {statuses} />
 				{:else}
-					<LoaderCircle class="ml-2 h-5 w-5 animate-spin" />
+					<div />
 				{/if}
 				{#if !loadingStatuses}
 					<StatusPerformance {statuses} />
 				{:else}
-					<LoaderCircle class="ml-2 h-5 w-5 animate-spin" />
+					<div />
 				{/if}
 				<StatusPing {website} />
 			</div>
