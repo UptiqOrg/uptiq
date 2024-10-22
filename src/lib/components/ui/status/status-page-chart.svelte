@@ -1,14 +1,15 @@
-<script>
+<script lang="ts">
 	import { prettifyDate } from '$lib/utils';
 	import { statusColorMap } from './constants';
 	import * as HoverCard from '$lib/components/ui/hover-card';
 
 	export let statuses = [];
+	const MAX_STATUSES = 50;
 </script>
 
 <div>
 	<div class="mx-auto mb-2 flex w-full items-center justify-center gap-0.5">
-		{#each Array(50 - statuses.length).fill(undefined) as emptyStatus}
+		{#each Array(Math.max(0, MAX_STATUSES - statuses.length)).fill(undefined) as emptyStatus}
 			<HoverCard.Root openDelay={100} closeDelay={0}>
 				<HoverCard.Trigger
 					target="_blank"
@@ -21,7 +22,7 @@
 				</HoverCard.Content>
 			</HoverCard.Root>
 		{/each}
-		{#each statuses as status}
+		{#each statuses.slice(-MAX_STATUSES) as status}
 			<HoverCard.Root openDelay={100} closeDelay={0}>
 				<HoverCard.Trigger
 					target="_blank"
