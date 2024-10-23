@@ -53,6 +53,8 @@
 			</DropdownMenu.Content>
 		</DropdownMenu.Root>
 	{:else}
-		<SignIn options={{ redirectTo: '/projects' }} signInPage="signin" />
+		<div class="px-6">
+			<SignIn options={{ redirectTo: '/projects' }} signInPage="signin" />
+		</div>
 	{/if}
 </div>

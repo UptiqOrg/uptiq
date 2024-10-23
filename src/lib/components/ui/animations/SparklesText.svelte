@@ -63,7 +63,7 @@
 <div
 	style:--sparkles-first-color="{colors.first};"
 	style:--sparkles-second-color="{colors.second};"
-	class={cn('text-6xl font-bold', className)}
+	class={cn('text-5xl font-bold sm:text-6xl', className)}
 	{...$$restProps}
 >
 	<span class="relative inline-block">

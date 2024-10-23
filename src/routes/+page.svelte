@@ -11,14 +11,6 @@
 
 	export let data;
 
-	// const features = [
-	// 	{ title: 'Uptime Monitoring', status: '✅' },
-	// 	{ title: 'Public Status Page', status: '✅' },
-	// 	{ title: 'Pro', status: '🚧' },
-	// 	{ title: 'Collaboration', status: '🚧' },
-	// 	{ title: 'Alerting', status: '🚧' }
-	// ];
-
 	onMount(() => {
 		const websiteMap = new Map();
 		websiteMap.set(data.website.id, data.website);
@@ -38,8 +30,9 @@
 		<BentoGrid>
 			<BentoGridItem className="col-span-1 sm:col-span-2 lg:col-span-1">
 				<div class="w-full">
+					<p class="text-2xl sm:text-3xl">Babe wake up,</p>
 					<SparklesText text="Uptime Monitoring" />
-					<p class="text-3xl">Simplified!</p>
+					<p class="text-2xl sm:text-3xl">just got easier!</p>
 				</div>
 			</BentoGridItem>
 			<BentoGridItem
@@ -70,15 +63,6 @@
 				</div>
 			</BentoGridItem>
 			<BentoGridItem className="col-span-1 p-2">
-				<!-- <h1 class="mb-4 pt-2 text-3xl">Features</h1> -->
-				<!-- <ul class="space-y-2">
-						{#each features as feature}
-							<li>
-								<span class="mr-2">{feature.status} </span>
-								<span>{feature.title}</span>
-							</li>
-						{/each}
-					</ul> -->
 				<div class="relative h-full w-full">
 					<div class="absolute bottom-4 right-4 rounded-md bg-lime-300 px-4 py-2">
 						Work In Progress 🚧
