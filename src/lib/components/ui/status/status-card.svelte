@@ -50,8 +50,11 @@
 				>
 			</div>
 			<div class="flex items-center space-x-4">
-				{#if statuses.length > 0}
-					<StatusBadge status={statuses[statuses.length - 1].status} />
+				{#if statuses?.length > 0}
+					{@const latestStatus = statuses.at(-1)}
+					{#if latestStatus}
+						<StatusBadge status={latestStatus.status} />
+					{/if}
 				{/if}
 				{#if showSettings}
 					<DropdownMenu.Root>

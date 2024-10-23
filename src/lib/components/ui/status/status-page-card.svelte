@@ -23,8 +23,11 @@
 	<div class="mb-3">
 		<div class="flex items-center justify-between">
 			<div class="flex items-center">
-				{#if statuses.length > 0}
-					<StatusBadge status={statuses[statuses.length - 1].status} />
+				{#if statuses?.length > 0}
+					{@const latestStatus = statuses.at(-1)}
+					{#if latestStatus}
+						<StatusBadge status={latestStatus.status} />
+					{/if}
 				{/if}
 				<h2 class="ml-4 text-lg font-medium">
 					{statusPageItem.name}
