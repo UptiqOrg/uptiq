@@ -32,7 +32,7 @@
 	/>
 	<section class="relative z-10 h-[calc(100vh-5rem)] w-full">
 		<BentoGrid>
-			<BentoGridItem className="col-span-1">
+			<BentoGridItem className="col-span-1 sm:col-span-2 lg:col-span-1">
 				<div class="w-full">
 					<SparklesText text="Uptime Monitoring" />
 					<p class="text-3xl">Simplified!</p>
