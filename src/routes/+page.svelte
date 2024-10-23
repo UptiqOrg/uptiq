@@ -7,7 +7,7 @@
 	import Auth from '$lib/components/ui/auth/auth.svelte';
 	import StatusPageChart from '$lib/components/ui/status/status-page-chart.svelte';
 	import { websiteStore } from '$lib/store/website.store';
-	import { onMount } from 'svelte';
+	import { onDestroy, onMount } from 'svelte';
 
 	export let data;
 
@@ -23,6 +23,10 @@
 		const websiteMap = new Map();
 		websiteMap.set(data.website.id, data.website);
 		websiteStore.set(websiteMap);
+	});
+
+	onDestroy(() => {
+		websiteStore.set(new Map());
 	});
 </script>
 
