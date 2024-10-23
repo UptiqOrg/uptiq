@@ -53,9 +53,6 @@
 			</DropdownMenu.Content>
 		</DropdownMenu.Root>
 	{:else}
-		<Button variant="outline">
-			<SignIn options={{ redirectTo: '/projects' }} />
-			<GitHub class="ml-2 h-5 w-5" />
-		</Button>
+		<SignIn options={{ redirectTo: '/projects' }} signInPage="signin" />
 	{/if}
 </div>
