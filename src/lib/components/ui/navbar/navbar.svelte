@@ -4,7 +4,7 @@
 </script>
 
 <nav
-	class="fixed flex h-20 w-screen place-items-center border-b bg-background text-lg font-medium shadow-sm"
+	class="fixed z-50 flex h-20 w-screen place-items-center border-b bg-background text-lg font-medium shadow-sm"
 >
 	<div class="container mx-auto flex items-center justify-between">
 		<a href="/">
