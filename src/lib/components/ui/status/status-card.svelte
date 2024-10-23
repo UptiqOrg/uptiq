@@ -40,7 +40,12 @@
 		<div class="flex items-center justify-between gap-2 rounded bg-background p-3">
 			<div>
 				<h2 class="mr-2 text-lg font-medium">{website.name}</h2>
-				<a href={website.url} target="_blank" class="text-xs text-muted-foreground">
+				<a
+					href={website.url}
+					target="_blank"
+					class="text-xs text-muted-foreground"
+					rel="noopener noreferrer"
+				>
 					{website.url}</a
 				>
 			</div>
