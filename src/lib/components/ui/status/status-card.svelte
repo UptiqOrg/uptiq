@@ -15,34 +15,40 @@
 	export let websiteId: string;
 	export let showWebsiteFormDialog: boolean;
 	export let showDeleteWebsiteDialog: boolean;
+	export let showSettings = true;
+
+	export let demoStatuses: SelectPartialStatus[] = [];
 
 	let statuses: SelectPartialStatus[] = [];
+
 	let loadingStatuses = true;
+	$: website = $websiteStore && websiteId ? $websiteStore.get(websiteId) : undefined;
 
 	onMount(async () => {
 		if (!websiteId) return;
-
-		statuses = await fetch(`/api/status/${websiteId}`).then((response) => response.json());
+		statuses =
+			demoStatuses.length > 0
+				? demoStatuses
+				: await fetch(`/api/status/${websiteId}`).then((response) => response.json());
 
 		loadingStatuses = false;
 	});
 </script>
 
-{#if websiteId}
-	{@const website = $websiteStore.get(websiteId)}
-	{#if website}
-		<Card.Root class="inline-block w-full p-2">
-			<div class="flex items-center justify-between gap-2 rounded bg-background p-3">
-				<div>
-					<h2 class="mr-2 text-lg font-medium">{website.name}</h2>
-					<a href={website.url} target="_blank" class="text-xs text-muted-foreground">
-						{website.url}</a
-					>
-				</div>
-				<div class="flex items-center space-x-4">
-					{#if statuses.length > 0}
-						<StatusBadge status={statuses[statuses.length - 1].status} />
-					{/if}
+{#if website}
+	<Card.Root class="inline-block w-full p-2">
+		<div class="flex items-center justify-between gap-2 rounded bg-background p-3">
+			<div>
+				<h2 class="mr-2 text-lg font-medium">{website.name}</h2>
+				<a href={website.url} target="_blank" class="text-xs text-muted-foreground">
+					{website.url}</a
+				>
+			</div>
+			<div class="flex items-center space-x-4">
+				{#if statuses.length > 0}
+					<StatusBadge status={statuses[statuses.length - 1].status} />
+				{/if}
+				{#if showSettings}
 					<DropdownMenu.Root>
 						<DropdownMenu.Trigger asChild let:builder>
 							<Button builders={[builder]} size="icon" variant="ghost" class="h-8 w-8">
@@ -69,30 +75,30 @@
 							>
 						</DropdownMenu.Content>
 					</DropdownMenu.Root>
+				{/if}
+			</div>
+		</div>
+		<div class="m-2 grid grid-cols-3 gap-2 divide-x rounded-lg border">
+			{#if !loadingStatuses}
+				<StatusAvailability {statuses} />
+			{:else}
+				<div />
+			{/if}
+			{#if !loadingStatuses}
+				<StatusPerformance {statuses} />
+			{:else}
+				<div />
+			{/if}
+			<StatusPing {website} />
+		</div>
+		<div class="flex h-44 w-full items-center justify-center p-4">
+			{#if statuses.length > 0}
+				<div class="h-full w-full">
+					<StatusChart {statuses} />
 				</div>
-			</div>
-			<div class="m-2 grid grid-cols-3 gap-2 divide-x rounded-lg border">
-				{#if !loadingStatuses}
-					<StatusAvailability {statuses} />
-				{:else}
-					<div />
-				{/if}
-				{#if !loadingStatuses}
-					<StatusPerformance {statuses} />
-				{:else}
-					<div />
-				{/if}
-				<StatusPing {website} />
-			</div>
-			<div class="flex h-44 w-full items-center justify-center p-4">
-				{#if statuses.length > 0}
-					<div class="h-full w-full">
-						<StatusChart {statuses} />
-					</div>
-				{:else}
-					<p class="text-muted-foreground">No data available</p>
-				{/if}
-			</div>
-		</Card.Root>
-	{/if}
+			{:else}
+				<p class="text-muted-foreground">No data available</p>
+			{/if}
+		</div>
+	</Card.Root>
 {/if}
