@@ -1,12 +1,12 @@
 <script lang="ts">
 	import { Motion } from 'svelte-motion';
 
-	export let id;
-	export let x;
-	export let y;
-	export let color;
-	export let delay;
-	export let scale;
+	export let id: string;
+	export let x: number;
+	export let y: number;
+	export let color: string = '#FFA500';
+	export let delay: number = 0;
+	export let scale: number = 1;
 </script>
 
 <Motion
