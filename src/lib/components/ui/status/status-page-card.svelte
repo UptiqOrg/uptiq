@@ -5,11 +5,21 @@
 	import StatusPerformance from '$lib/components/ui/status/status-performance.svelte';
 	import StatusPageChart from '$lib/components/ui/status/status-page-chart.svelte';
 
-	export let statusPageItem;
-	$: statuses = statusPageItem.statuses;
+	interface Status {
+		status: string;
+	}
+
+	interface StatusPageItem {
+		name: string;
+		url: string;
+		statuses: Status[];
+	}
+
+	export let statusPageItem: StatusPageItem;
+	$: statuses = statusPageItem?.statuses ?? [];
 </script>
 
-<Card.Root class="h-full w-full px-4 py-4 sm:px-8">
+<Card.Root class="mb-4 h-full w-full px-4 py-4 sm:px-8">
 	<div class="mb-3">
 		<div class="flex items-center justify-between">
 			<div class="flex items-center">
