@@ -30,7 +30,13 @@
 					{statusPageItem.name}
 				</h2>
 			</div>
-			<a href={statusPageItem.url} target="_blank" class="text-xs text-muted-foreground">
+			<a
+				href={statusPageItem.url}
+				target="_blank"
+				rel="noopener noreferrer"
+				aria-label={`Visit status page for ${statusPageItem.name} (opens in new tab)`}
+				class="text-xs text-muted-foreground hover:underline"
+			>
 				{statusPageItem.url}
 			</a>
 		</div>
