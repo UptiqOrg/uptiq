@@ -38,7 +38,7 @@ export const postProjectController = async (context: Context) => {
 	const { token } = context.get('authUser');
 	if (!token) return context.status(401);
 
-	const requestBody = context.req.param();
+	const requestBody = context.get('requestBody');
 
 	return await createProject({
 		userId: String(token.id),
