@@ -9,7 +9,7 @@
 	type $$Events = SelectPrimitive.TriggerEvents;
 
 	let defaultClasses =
-		'bg-secondary px-4 py-2 rounded-md w-full focus-within:border-ring border-2 border-input ring-offset-background focus-visible:ring-ring aria-[invalid]:border-destructive data-[placeholder]:[&>span]:text-muted-foreground  w-full rounded-md text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1';
+		'bg-secondary px-4 py-2 w-full focus-within:border-ring border-2 border-input ring-offset-background focus-visible:ring-ring aria-[invalid]:border-destructive data-[placeholder]:[&>span]:text-muted-foreground  w-full text-sm focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1';
 	let className: $$Props['class'] = undefined;
 	export let label: string;
 	export { className as class };

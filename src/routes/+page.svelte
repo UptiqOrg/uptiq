@@ -40,13 +40,13 @@
 			>
 				<img
 					src="https://ucarecdn.com/2093e56b-7d0c-4e8f-9942-d285e89900e5/-/preview/1000x556/"
-					class="h-full w-full rounded-lg object-cover"
+					class="h-full w-full rounded-lg border-2 border-foreground object-cover"
 					alt=""
 				/>
 			</BentoGridItem>
 			<BentoGridItem className="col-span-1 sm:row-span-2 p-1 bg-foreground">
 				<div class="flex h-full flex-col space-y-1">
-					<div class="h-full rounded-lg bg-background p-4">
+					<div class="h-full rounded-lg border-2 border-foreground bg-background p-4">
 						<StatusPageChart statuses={data.statuses} />
 					</div>
 					<div>

@@ -86,7 +86,7 @@
 				{/if}
 			</div>
 		</div>
-		<div class="m-2 grid grid-cols-3 gap-2 divide-x rounded-lg border">
+		<div class="m-2 grid grid-cols-3 gap-2 divide-x rounded-lg border-2 border-foreground">
 			{#if !loadingStatuses}
 				<StatusAvailability {statuses} />
 			{:else}
