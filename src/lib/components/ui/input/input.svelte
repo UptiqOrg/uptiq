@@ -3,7 +3,7 @@
 	import { cn } from '$lib/utils';
 
 	let className: string | undefined | null = undefined;
-	let defaultClasses = 'bg-secondary px-4 py-2 rounded-md w-full focus-within:border-ring border-2';
+	let defaultClasses = 'bg-secondary px-4 py-2  w-full focus-within:border-ring border-2';
 
 	export let value: HTMLInputAttributes['value'] = undefined;
 	export let label: string = '';

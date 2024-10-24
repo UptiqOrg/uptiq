@@ -20,7 +20,7 @@
 	<title>upTiq</title>
 </svelte:head>
 <Navbar />
-<main class="h-screen w-screen overflow-y-auto overflow-x-hidden bg-secondary">
+<main class="h-screen w-screen overflow-y-auto overflow-x-hidden">
 	<div class="container mx-auto py-20">
 		<slot />
 	</div>
