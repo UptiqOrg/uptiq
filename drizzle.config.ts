@@ -1,12 +1,12 @@
-import 'dotenv/config';
-import type { Config } from 'drizzle-kit';
+import { defineConfig } from 'drizzle-kit';
 
-export default {
-	out: './src/lib/db/migrations',
+export default defineConfig({
 	schema: './src/lib/db/schema.ts',
-	dialect: 'turso',
+	out: './src/lib/db/migrations',
+	dialect: 'postgresql',
 	dbCredentials: {
-		url: process.env.SECRET_TURSO_DATABASE_URL!,
-		authToken: process.env.SECRET_TURSO_AUTH_TOKEN
-	}
-} satisfies Config;
+		url: process.env.SECRET_XATA_PG_ENDPOINT!
+	},
+	verbose: true,
+	strict: true
+});

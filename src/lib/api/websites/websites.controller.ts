@@ -26,7 +26,7 @@ export const getWebsiteController = async (context: Context) => {
 	const project = await getProjectBySlug(String(token.id), slug);
 	if (!project) return context.json({ error: 'Project not found' }, 404);
 
-	const websiteResponse = await getWebsite(String(token.id), +websiteId);
+	const websiteResponse = await getWebsite(String(token.id), websiteId);
 
 	return context.json(
 		websiteResponse.error ? { error: websiteResponse.error } : websiteResponse.data,
@@ -66,7 +66,7 @@ export const postWebsitesController = async (context: Context) => {
 		projectId: project.id,
 		name: website.name as string,
 		url: website.url as string,
-		checkInterval: website.checkInterval as number
+		checkInterval: website.checkInterval
 	});
 
 	return context.json(
@@ -86,7 +86,7 @@ export const putWebsitesController = async (context: Context) => {
 
 	const requestBody = context.get('requestBody');
 
-	const updateWebsiteResponse = await updateWebsite(String(token.id), +websiteId, requestBody);
+	const updateWebsiteResponse = await updateWebsite(String(token.id), websiteId, requestBody);
 
 	return context.json(
 		updateWebsiteResponse.error
@@ -103,7 +103,7 @@ export const deleteWebsitesController = async (context: Context) => {
 	const { websiteId } = context.req.param();
 	if (!websiteId) return context.json({ error: 'Missing website ID' }, 400);
 
-	const deleteWebsiteResponse = await deleteWebsite(String(token.id), +websiteId);
+	const deleteWebsiteResponse = await deleteWebsite(String(token.id), websiteId);
 
 	return context.json(
 		deleteWebsiteResponse.error

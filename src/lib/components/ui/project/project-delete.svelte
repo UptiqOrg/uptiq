@@ -16,7 +16,7 @@
 			showDeleteProjectDialog = false;
 
 			projectStore.update((projectMap) => {
-				projectMap.delete(String(selectedProject.id));
+				projectMap.delete(selectedProject.id);
 				return projectMap;
 			});
 		});

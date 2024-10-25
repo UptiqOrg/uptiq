@@ -1,6 +1,7 @@
 import { Hono, type Context } from 'hono';
 import { verifyAuth } from '@hono/auth-js';
 import { ensureUser } from './user.service';
+import type { InsertUser } from '$lib/db/schema';
 
 export const userRouter = new Hono();
 
@@ -8,7 +9,7 @@ export const ensureUserController = async (context: Context) => {
 	const { token } = context.get('authUser');
 	if (!token) return context.status(401);
 
-	const user = {
+	const user: InsertUser = {
 		id: token.id,
 		username: token.login,
 		email: token.email,

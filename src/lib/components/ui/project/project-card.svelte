@@ -19,7 +19,7 @@
 			<Card.Root class="relative inline-block w-full">
 				<div class="p-4">
 					<div class="z-10 mb-3 whitespace-pre-wrap text-xl font-medium">{project.name}</div>
-					<p class="text-sm">{project.description}</p>
+					<p class="h-10 text-sm">{project.description ?? ''}</p>
 
 					<DropdownMenu.Root>
 						<DropdownMenu.Trigger asChild let:builder>
@@ -37,7 +37,7 @@
 							<DropdownMenu.Item
 								on:click={() => {
 									showProjectFormDialog = true;
-									selectedProjectIdStore.set(String(project.id));
+									selectedProjectIdStore.set(project.id);
 								}}
 							>
 								Edit
@@ -46,6 +46,7 @@
 							<DropdownMenu.Item
 								on:click={() => {
 									showDeleteProjectDialog = true;
+									selectedProjectIdStore.set(project.id);
 								}}
 							>
 								Delete

@@ -7,7 +7,7 @@ export const getStatusController = async (context: Context) => {
 	const { websiteId } = context.req.param();
 	if (!websiteId) return context.json({ error: 'Missing website ID' }, 400);
 
-	const websiteResponse = await getStatus(+websiteId);
+	const websiteResponse = await getStatus(websiteId);
 
 	return context.json(
 		websiteResponse.error ? { error: websiteResponse.error } : websiteResponse.data,
@@ -31,7 +31,7 @@ export const getStatusPageController = async (context: Context) => {
 	const { projectId } = context.req.param();
 	if (!projectId) return context.json({ error: 'Missing project ID' }, 400);
 
-	const websiteResponse = await getStatusPage(+projectId);
+	const websiteResponse = await getStatusPage(projectId);
 
 	return context.json(
 		websiteResponse.error ? { error: websiteResponse.error } : websiteResponse.data,

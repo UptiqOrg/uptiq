@@ -30,7 +30,7 @@
 		await fetch(URL, {
 			method: selectedWebsite ? 'PUT' : 'POST',
 			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ name, url, checkInterval })
+			body: JSON.stringify({ name, url, checkInterval: String(checkInterval) })
 		})
 			.then((res) => {
 				return res.json();

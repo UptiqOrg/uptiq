@@ -9,14 +9,14 @@ import { getProjectBySlug } from '../projects/projects.service';
 
 export const canProjectHaveMoreWebsite = async (
 	userId: string,
-	projectId: number
+	projectId: string
 ): Promise<boolean> => {
 	if (await isUserPro(userId)) return true;
 
 	return (await getWebsiteCount(projectId)) < 2;
 };
 
-export const getWebsiteCount = async (projectId: number): Promise<number> => {
+export const getWebsiteCount = async (projectId: string): Promise<number> => {
 	return await db
 		.select({ count: count(websites.id) })
 		.from(websites)
@@ -26,7 +26,7 @@ export const getWebsiteCount = async (projectId: number): Promise<number> => {
 
 export const getWebsite = async (
 	userId: string,
-	websiteId: number
+	websiteId: string
 ): Promise<ServiceResponse<SelectWebsitePartial>> => {
 	return await db
 		.select({
@@ -123,7 +123,7 @@ export const createWebsite = async (
 
 export const updateWebsite = async (
 	userId: string,
-	websiteId: number,
+	websiteId: string,
 	updatedWebsite: InsertWebsite
 ): Promise<ServiceResponse<SelectWebsitePartial>> => {
 	return await db
@@ -152,8 +152,8 @@ export const updateWebsite = async (
 
 export const deleteWebsite = async (
 	userId: string,
-	websiteId: number
-): Promise<ServiceResponse<{ deletedId: number }>> => {
+	websiteId: string
+): Promise<ServiceResponse<{ deletedId: string }>> => {
 	return await db
 		.delete(websites)
 		.where(and(eq(websites.userId, userId), eq(websites.id, websiteId)))

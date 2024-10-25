@@ -1,9 +1,6 @@
-import { SECRET_TURSO_AUTH_TOKEN, SECRET_TURSO_DATABASE_URL } from '$env/static/private';
-import { drizzle } from 'drizzle-orm/connect';
+import pg from 'pg';
+import { SECRET_XATA_PG_ENDPOINT } from '$env/static/private';
+import { drizzle } from 'drizzle-orm/node-postgres';
 
-export const db = await drizzle('turso', {
-	connection: {
-		url: SECRET_TURSO_DATABASE_URL!,
-		authToken: SECRET_TURSO_AUTH_TOKEN!
-	}
-});
+const pool = new pg.Pool({ connectionString: SECRET_XATA_PG_ENDPOINT, max: 10 });
+export const db = drizzle(pool);

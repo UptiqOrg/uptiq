@@ -11,7 +11,7 @@ import type { ServiceResponse, StatusPageResponse } from '../types';
 import type { StatusCode } from 'hono/utils/http-status';
 
 export const getStatus = async (
-	websiteId: number,
+	websiteId: string,
 	limit = 40
 ): Promise<ServiceResponse<SelectPartialStatus[]>> => {
 	return await db
@@ -76,7 +76,7 @@ export const getStatusByProject = async (
 };
 
 export const getStatusPage = async (
-	projectId: number
+	projectId: string
 ): Promise<ServiceResponse<StatusPageResponse[]>> => {
 	const websitesResponse = await db
 		.select({
