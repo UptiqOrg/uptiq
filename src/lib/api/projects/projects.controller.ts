@@ -41,7 +41,7 @@ export const postProjectController = async (context: Context) => {
 	const requestBody = context.get('requestBody');
 
 	return await createProject({
-		userId: String(token.id),
+		userId: token.id as string,
 		name: requestBody.name as string,
 		description: requestBody.description as string,
 		slug: requestBody.slug as string

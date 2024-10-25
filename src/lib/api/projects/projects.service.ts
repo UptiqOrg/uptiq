@@ -116,7 +116,7 @@ export const updateProject = async (
 export const deleteProject = async (
 	userId: string,
 	slug: string
-): Promise<ServiceResponse<{ deletedId: number }>> => {
+): Promise<ServiceResponse<{ deletedId: string }>> => {
 	return await db
 		.delete(projects)
 		.where(and(eq(projects.userId, userId), eq(projects.slug, slug)))
