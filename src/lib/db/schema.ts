@@ -1,95 +1,120 @@
-import { sqliteTable, text, integer } from 'drizzle-orm/sqlite-core';
-import { sql } from 'drizzle-orm';
+import {
+	pgTable,
+	text,
+	boolean,
+	integer,
+	timestamp,
+	uuid,
+	pgEnum,
+	varchar
+} from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm';
+import { createInsertSchema } from 'drizzle-zod';
 
-// Users table
-export const users = sqliteTable('users', {
-	id: text('id').primaryKey(),
-	name: text('name'),
-	pro: integer('pro', { mode: 'boolean' }).default(false),
-	username: text('username').notNull().unique(),
-	email: text('email').notNull().unique(),
-	createdAt: integer('created_at', { mode: 'timestamp' })
-		.notNull()
-		.default(sql`CURRENT_TIMESTAMP`),
-	updatedAt: integer('updated_at', { mode: 'timestamp' })
-		.notNull()
-		.default(sql`CURRENT_TIMESTAMP`)
+// Enums
+export const checkIntervalEnum = pgEnum('check_interval_enum', ['1', '2', '5', '10']);
+export const statusEnum = pgEnum('status_enum', [
+	'up',
+	'degraded',
+	'down',
+	'maintenance',
+	'warning'
+]);
+
+// Types
+export type CheckInterval = '1' | '2' | '5' | '10';
+export type WebsiteStatus = 'up' | 'degraded' | 'down' | 'maintenance' | 'warning';
+
+// Helper functions
+export const getStatusColor = (status: WebsiteStatus) => {
+	const colors = {
+		up: 'green',
+		degraded: 'yellow',
+		down: 'red',
+		maintenance: 'blue',
+		warning: 'orange'
+	} as const;
+
+	return colors[status];
+};
+
+export const getStatusText = (status: WebsiteStatus) => {
+	const text = {
+		up: 'Operational',
+		degraded: 'Degraded Performance',
+		down: 'Major Outage',
+		maintenance: 'Maintenance',
+		warning: 'Minor Issue'
+	} as const;
+
+	return text[status];
+};
+
+// Tables
+export const users = pgTable('users', {
+	id: text('id').notNull().unique().primaryKey(),
+	name: varchar('name', { length: 25 }),
+	pro: boolean('pro').default(false),
+	username: varchar('username', { length: 39 }).notNull().unique(),
+	email: varchar('email', { length: 255 }).notNull().unique(),
+	createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+	updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow()
 });
 
-// Projects table
-export const projects = sqliteTable('projects', {
-	id: integer('id').primaryKey({ autoIncrement: true }),
-	slug: text('slug').notNull().unique(),
+export const projects = pgTable('projects', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	slug: varchar('slug', { length: 10 }).notNull().unique(),
 	userId: text('user_id')
 		.notNull()
 		.references(() => users.id),
-	name: text('name').notNull(),
-	description: text('description'),
-	createdAt: integer('created_at', { mode: 'timestamp' })
-		.notNull()
-		.default(sql`CURRENT_TIMESTAMP`),
-	updatedAt: integer('updated_at', { mode: 'timestamp' })
-		.notNull()
-		.default(sql`CURRENT_TIMESTAMP`)
+	name: varchar('name', { length: 25 }).notNull(),
+	description: varchar('description', { length: 400 }),
+	createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+	updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow()
 });
 
-// Websites table
-export const websites = sqliteTable('websites', {
-	id: integer('id').primaryKey({ autoIncrement: true }),
-	projectId: integer('project_id')
+export const websites = pgTable('websites', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	projectId: uuid('project_id')
 		.notNull()
 		.references(() => projects.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
 	userId: text('user_id')
 		.notNull()
 		.references(() => users.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
-	url: text('url').notNull(),
-	name: text('name').notNull(),
-	checkInterval: integer('check_interval').notNull().default(300), // in seconds
-	createdAt: integer('created_at', { mode: 'timestamp' })
-		.notNull()
-		.default(sql`CURRENT_TIMESTAMP`),
-	updatedAt: integer('updated_at', { mode: 'timestamp' })
-		.notNull()
-		.default(sql`CURRENT_TIMESTAMP`)
+	url: varchar('url', { length: 2083 }).notNull(), // max URL length for compatibility
+	name: varchar('name', { length: 25 }).notNull(),
+	checkInterval: checkIntervalEnum('check_interval').notNull().default('5'),
+	createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+	updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow()
 });
 
-// Uptime checks table
-export const uptimeChecks = sqliteTable('uptime_checks', {
-	id: integer('id').primaryKey({ autoIncrement: true }),
-	websiteId: integer('website_id')
+export const uptimeChecks = pgTable('uptime_checks', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	websiteId: uuid('website_id')
 		.notNull()
 		.references(() => websites.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
-	status: text('status').notNull(),
-	responseTime: integer('response_time'), // in milliseconds
+	status: statusEnum('status').notNull(),
+	responseTime: integer('response_time'),
 	statusCode: integer('status_code'),
-	createdAt: text('created_at')
-		.notNull()
-		.default(sql`(current_timestamp)`)
+	createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow()
 });
 
-// Alerts table
-export const alerts = sqliteTable('alerts', {
-	id: integer('id').primaryKey({ autoIncrement: true }),
-	websiteId: integer('website_id')
+export const alerts = pgTable('alerts', {
+	id: uuid('id').primaryKey().defaultRandom(),
+	websiteId: uuid('website_id')
 		.notNull()
-		.references(() => websites.id),
-	type: text('type').notNull(),
-	target: text('target').notNull(), // email address, phone number, or webhook URL
-	enabled: integer('enabled').notNull().default(1), // SQLite doesn't have a boolean type, so we use integer
-	createdAt: integer('created_at', { mode: 'timestamp' })
-		.notNull()
-		.default(sql`CURRENT_TIMESTAMP`),
-	updatedAt: integer('updated_at', { mode: 'timestamp' })
-		.notNull()
-		.default(sql`CURRENT_TIMESTAMP`)
+		.references(() => websites.id, { onDelete: 'cascade', onUpdate: 'cascade' }),
+	type: varchar('type', { length: 25 }).notNull(),
+	target: varchar('target', { length: 255 }).notNull(), // email, webhook URL, etc
+	enabled: boolean('enabled').notNull().default(true),
+	createdAt: timestamp('created_at', { withTimezone: true }).notNull().defaultNow(),
+	updatedAt: timestamp('updated_at', { withTimezone: true }).notNull().defaultNow()
 });
 
 // Relations
-import { relations } from 'drizzle-orm';
-import { createInsertSchema } from 'drizzle-zod';
-
 export const usersRelations = relations(users, ({ many }) => ({
-	projects: many(projects)
+	projects: many(projects),
+	websites: many(websites)
 }));
 
 export const projectsRelations = relations(projects, ({ one, many }) => ({
