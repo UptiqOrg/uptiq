@@ -1,75 +1,19 @@
 {
   "version": "7",
-  "dialect": "sqlite",
+  "dialect": "postgresql",
   "entries": [
     {
       "idx": 0,
-      "version": "6",
-      "when": 1728336105136,
-      "tag": "0000_goofy_wallop",
+      "version": "7",
+      "when": 1729797494915,
+      "tag": "0000_nervous_bulldozer",
       "breakpoints": true
     },
     {
       "idx": 1,
-      "version": "6",
-      "when": 1728371524619,
-      "tag": "0001_romantic_leo",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1729008030132,
-      "tag": "0002_cuddly_wolf_cub",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "6",
-      "when": 1729195072262,
-      "tag": "0003_dark_morgan_stark",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "6",
-      "when": 1729222878504,
-      "tag": "0004_superb_polaris",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "6",
-      "when": 1729229571593,
-      "tag": "0005_shallow_menace",
-      "breakpoints": true
-    },
-    {
-      "idx": 6,
-      "version": "6",
-      "when": 1729231555296,
-      "tag": "0006_nosy_chamber",
-      "breakpoints": true
-    },
-    {
-      "idx": 7,
-      "version": "6",
-      "when": 1729511061870,
-      "tag": "0007_massive_smiling_tiger",
-      "breakpoints": true
-    },
-    {
-      "idx": 8,
-      "version": "6",
-      "when": 1729571240725,
-      "tag": "0008_redundant_randall",
-      "breakpoints": true
-    },
-    {
-      "idx": 9,
-      "version": "6",
-      "when": 1729596704530,
-      "tag": "0009_mysterious_kang",
+      "version": "7",
+      "when": 1729800029715,
+      "tag": "0001_solid_diamondback",
       "breakpoints": true
     }
   ]
